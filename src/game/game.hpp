@@ -12,7 +12,8 @@ struct Game{
     textureHolder(),
     fontHolder(),
     inputHandler(),
-    context(window, textureHolder, fontHolder, inputHandler), world(window) {
+    context(window, textureHolder, fontHolder, inputHandler) {
+        world = std::unique_ptr<World>(new World(context));
         std::cout << "creating game..." << std::endl;
     }
 
@@ -37,13 +38,13 @@ struct Game{
     }
 
     void update(sf::Time deltaTime) {
-        world.update(deltaTime);
+        world->update(deltaTime);
     }
 
 
     void render() {
         window.clear();
-        world.draw();
+        world->draw();
         window.setView(window.getDefaultView());
         window.display();
     }
@@ -56,7 +57,7 @@ struct Game{
 
     }
     sf::RenderWindow window;
-    World world;
+    std::unique_ptr<World> world;
     Context context;
     TextureHolder textureHolder;
     FontHolder fontHolder;

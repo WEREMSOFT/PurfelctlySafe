@@ -6,7 +6,9 @@ namespace Textures{
     enum ID {
         BACKGROUND,
         TABLE,
-        HOUSE
+        HOUSE,
+        LIGHT_O_TABLE,
+        TEXTURE_COUNT
     };
 }
 

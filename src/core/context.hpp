@@ -7,14 +7,14 @@
 #include "input_handler.hpp"
 
 struct Context {
-    Context(sf::RenderWindow& window,
-            TextureHolder& textureHolder,
-            FontHolder& fontHolder,
-            InputHandler& inputHandler):
-            window(&window),
-            textureHolder(&textureHolder),
-            fontHolder(&fontHolder),
-            inputHandler(&inputHandler){}
+    Context(sf::RenderWindow& pWindow,
+            TextureHolder& pTextureHolder,
+            FontHolder& pFontHolder,
+            InputHandler& pInputHandler):
+            window(&pWindow),
+            textureHolder(&pTextureHolder),
+            fontHolder(&pFontHolder),
+            inputHandler(&pInputHandler){}
     sf::RenderWindow* window;
     TextureHolder* textureHolder;
     FontHolder* fontHolder;

@@ -6,14 +6,14 @@
 
 template <typename Resource, typename Identifier>
 struct ResourceHolder {
-private:
     std::map<Identifier, std::unique_ptr<Resource>> resourceMap;
-public:
     void load(Identifier id, const std::string& filename){
-        std::unique_ptr<Resource> resource(new Resource());
-        assert(resource->loadFromFile(filename) && "ERROR!! SOMETHING WHEN WRONG LOADING RESOURCE ");
-        auto inserted = resourceMap.insert(std::make_pair(id, std::move(resource)));
-        assert(inserted.second);
+        if(resourceMap.find(id) == resourceMap.end()){
+            std::unique_ptr<Resource> resource(new Resource());
+            assert(resource->loadFromFile(filename) && "ERROR!! SOMETHING WHEN WRONG LOADING RESOURCE ");
+            auto inserted = resourceMap.insert(std::make_pair(id, std::move(resource)));
+            assert(inserted.second);
+        }
     }
 
     Resource& get(Identifier id) const {
