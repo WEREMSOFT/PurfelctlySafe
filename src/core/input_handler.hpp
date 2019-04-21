@@ -79,4 +79,11 @@ struct InputHandler {
         }
     }
 
+    void processEvent(sf::Event event){
+        if (event.type == sf::Event::KeyPressed){
+            std::cout << "Key pressed " << event.key.code << std::endl;
+        }
+
+    }
+
 };

@@ -1,10 +1,11 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "world.hpp"
 #include "../core/context.hpp"
 
-struct Game{
+struct Application {
     sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
     sf::RenderWindow window;
     TextureHolder textureHolder;
@@ -13,18 +14,18 @@ struct Game{
     Context context;
     World world;
 
-    Game():
-    window(sf::VideoMode(1230, 768), "SFML Apllication"),
-    textureHolder(),
-    fontHolder(),
-    inputHandler(),
-    context(window, textureHolder, fontHolder, inputHandler),
-    world(context) {
-        std::cout << "creating game..." << std::endl;
+    Application() :
+            window(sf::VideoMode(1230, 768), "SFML Apllication"),
+            textureHolder(),
+            fontHolder(),
+            inputHandler(),
+            context(window, textureHolder, fontHolder, inputHandler),
+            world(context) {
+        std::cout << "creating application..." << std::endl;
     }
 
-    ~Game(){
-        std::cout << "destroying game" << std::endl;
+    ~Application() {
+        std::cout << "destroying application" << std::endl;
     }
 
     void run() {
@@ -32,9 +33,9 @@ struct Game{
         sf::Clock clock;
         sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
-        while(window.isOpen()) {
+        while (window.isOpen()) {
             timeSinceLastUpdate += clock.restart();
-            while(timeSinceLastUpdate > TimePerFrame) {
+            while (timeSinceLastUpdate > TimePerFrame) {
                 timeSinceLastUpdate -= TimePerFrame;
                 processInput();
                 update(TimePerFrame);
@@ -61,10 +62,10 @@ struct Game{
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            if (event.type == sf::Event::KeyPressed)
-                if(event.key.code == sf::Keyboard::Escape)
-                    window.close();
+        if (event.type == sf::Event::KeyPressed)
+            if (event.key.code == sf::Keyboard::Escape)
+                window.close();
 
-
+        inputHandler.processEvent(event);
     }
 };
