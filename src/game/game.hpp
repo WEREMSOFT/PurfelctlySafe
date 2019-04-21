@@ -6,14 +6,20 @@
 
 struct Game{
     sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
+    sf::RenderWindow window;
+    TextureHolder textureHolder;
+    FontHolder fontHolder;
+    InputHandler inputHandler;
+    Context context;
+    World world;
 
     Game():
     window(sf::VideoMode(1230, 768), "SFML Apllication"),
     textureHolder(),
     fontHolder(),
     inputHandler(),
-    context(window, textureHolder, fontHolder, inputHandler) {
-        world = std::unique_ptr<World>(new World(context));
+    context(window, textureHolder, fontHolder, inputHandler),
+    world(context) {
         std::cout << "creating game..." << std::endl;
     }
 
@@ -38,13 +44,13 @@ struct Game{
     }
 
     void update(sf::Time deltaTime) {
-        world->update(deltaTime);
+        world.update(deltaTime);
     }
 
 
     void render() {
         window.clear();
-        world->draw();
+        world.draw();
         window.setView(window.getDefaultView());
         window.display();
     }
@@ -55,11 +61,10 @@ struct Game{
             if (event.type == sf::Event::Closed)
                 window.close();
 
+            if (event.type == sf::Event::KeyPressed)
+                if(event.key.code == sf::Keyboard::Escape)
+                    window.close();
+
+
     }
-    sf::RenderWindow window;
-    std::unique_ptr<World> world;
-    Context context;
-    TextureHolder textureHolder;
-    FontHolder fontHolder;
-    InputHandler inputHandler;
 };

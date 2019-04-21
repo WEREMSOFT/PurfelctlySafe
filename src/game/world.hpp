@@ -47,7 +47,7 @@ struct World: sf::NonCopyable {
     }
 
     void update(sf::Time dt) {
-        inputHandler.handleRealtimeInput(commandQueue);
+        context.inputHandler->handleRealtimeInput(commandQueue);
 
         while(!commandQueue.isEmpty())
             scene.onCommand(commandQueue.pop(), dt);
@@ -78,7 +78,6 @@ private:
         LAYER_COUNT
     };
     std::array<GameObject*, LAYER_COUNT> sceneLayers;
-    InputHandler inputHandler;
     CommandQueue commandQueue;
     Context context;
 };
