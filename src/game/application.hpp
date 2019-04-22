@@ -4,6 +4,12 @@
 #include <iostream>
 #include "world.hpp"
 #include "../core/context.hpp"
+#include "../core/states/state_stack.hpp"
+#include "states.hpp"
+#include "states/title_state.hpp"
+#include "states/menu_state.hpp"
+#include "states/pause_state.hpp"
+#include "states/game_state.hpp"
 
 struct Application {
     sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
@@ -12,7 +18,8 @@ struct Application {
     FontHolder fontHolder;
     InputHandler inputHandler;
     Context context;
-    World world;
+//    World world;
+    StateStack stateStack;
 
     Application() :
             window(sf::VideoMode(1230, 768), "SFML Apllication"),
@@ -20,8 +27,11 @@ struct Application {
             fontHolder(),
             inputHandler(),
             context(window, textureHolder, fontHolder, inputHandler),
-            world(context) {
+            stateStack(context) {
         std::cout << "creating application..." << std::endl;
+        loadTextures();
+        stateStack.registerState<GameState>(States::GAME);
+        stateStack.pushState(States::GAME);
     }
 
     ~Application() {
@@ -45,13 +55,20 @@ struct Application {
     }
 
     void update(sf::Time deltaTime) {
-        world.update(deltaTime);
+        stateStack.update(deltaTime);
     }
 
+    void loadTextures() {
+        context.textureHolder->load(Textures::BACKGROUND, "./assets/images/background.jpg");
+        context.textureHolder->load(Textures::LIGHT_O_TABLE, "./assets/images/light-o-table.png");
+        context.textureHolder->load(Textures::TABLE, "./assets/images/table.png");
+        context.textureHolder->load(Textures::HOUSE, "./assets/images/house.png");
+        context.textureHolder->load(Textures::TITLE_BACKGROUND_TILE, "../assets/images/pattern_background.png");
+    }
 
     void render() {
         window.clear();
-        world.draw();
+        stateStack.draw();
         window.setView(window.getDefaultView());
         window.display();
     }
@@ -67,5 +84,13 @@ struct Application {
                 window.close();
 
         inputHandler.processEvent(event);
+        stateStack.handleEvent(event);
+    }
+
+    void registerStates(){
+//        stateStack.registerState<TitleState>(States::TITLE);
+//        stateStack.registerState<Menu>(States::MENU);
+//        stateStack.registerState<Pause>(States::PAUSE);
+        stateStack.registerState<GameState>(States::GAME);
     }
 };

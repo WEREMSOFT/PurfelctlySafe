@@ -14,7 +14,6 @@ struct World: sf::NonCopyable {
     window(*context.window),
     view(window.getDefaultView()),
     context(context) {
-        loadTextures();
         buildScene();
     }
 
@@ -60,11 +59,8 @@ struct World: sf::NonCopyable {
         window.draw(scene);
     }
 
-    void loadTextures() {
-        context.textureHolder->load(Textures::BACKGROUND, "./assets/images/background.jpg");
-        context.textureHolder->load(Textures::LIGHT_O_TABLE, "./assets/images/light-o-table.png");
-        context.textureHolder->load(Textures::TABLE, "./assets/images/table.png");
-        context.textureHolder->load(Textures::HOUSE, "./assets/images/house.png");
+    CommandQueue& getCommandQueue() {
+        return commandQueue;
     }
 
 private:

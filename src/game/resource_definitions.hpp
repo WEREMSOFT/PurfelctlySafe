@@ -8,6 +8,7 @@ namespace Textures{
         TABLE,
         HOUSE,
         LIGHT_O_TABLE,
+        TITLE_BACKGROUND_TILE,
         TEXTURE_COUNT
     };
 }
