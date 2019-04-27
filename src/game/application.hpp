@@ -10,6 +10,7 @@
 #include "states/menu_state.hpp"
 #include "states/pause_state.hpp"
 #include "states/game_state.hpp"
+#include "states/loading_state.hpp"
 
 struct Application {
     sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
@@ -18,7 +19,6 @@ struct Application {
     FontHolder fontHolder;
     InputHandler inputHandler;
     Context context;
-//    World world;
     StateStack stateStack;
 
     Application() :
@@ -29,9 +29,12 @@ struct Application {
             context(window, textureHolder, fontHolder, inputHandler),
             stateStack(context) {
         std::cout << "creating application..." << std::endl;
-        loadTextures();
+
+        stateStack.registerState<LoadingState>(States::LOADING);
         stateStack.registerState<GameState>(States::GAME);
-        stateStack.pushState(States::GAME);
+        stateStack.registerState<TitleState>(States::TITLE);
+
+        stateStack.pushState(States::LOADING);
     }
 
     ~Application() {
@@ -56,14 +59,7 @@ struct Application {
 
     void update(sf::Time deltaTime) {
         stateStack.update(deltaTime);
-    }
-
-    void loadTextures() {
-        context.textureHolder->load(Textures::BACKGROUND, "./assets/images/background.jpg");
-        context.textureHolder->load(Textures::LIGHT_O_TABLE, "./assets/images/light-o-table.png");
-        context.textureHolder->load(Textures::TABLE, "./assets/images/table.png");
-        context.textureHolder->load(Textures::HOUSE, "./assets/images/house.png");
-        context.textureHolder->load(Textures::TITLE_BACKGROUND_TILE, "../assets/images/pattern_background.png");
+        if(stateStack.isEmpty()) window.close();
     }
 
     void render() {
@@ -75,22 +71,22 @@ struct Application {
 
     void processInput() {
         sf::Event event;
-        while (window.pollEvent(event))
-            if (event.type == sf::Event::Closed)
+        while (window.pollEvent(event)){
+
+            if (event.type == sf::Event::Closed){
                 window.close();
+            }
 
-        if (event.type == sf::Event::KeyPressed)
-            if (event.key.code == sf::Keyboard::Escape)
-                window.close();
+            if (event.type == sf::Event::KeyPressed){
+                if (event.key.code == sf::Keyboard::Escape){
+                    window.close();
+                }
+            }
 
-        inputHandler.processEvent(event);
-        stateStack.handleEvent(event);
-    }
+            inputHandler.processEvent(event);
+            stateStack.handleEvent(event);
+        }
 
-    void registerStates(){
-//        stateStack.registerState<TitleState>(States::TITLE);
-//        stateStack.registerState<Menu>(States::MENU);
-//        stateStack.registerState<Pause>(States::PAUSE);
-        stateStack.registerState<GameState>(States::GAME);
+
     }
 };

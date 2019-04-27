@@ -11,11 +11,13 @@ struct StateStack;
 struct State {
     typedef std::unique_ptr<State> Ptr;
 
-    State(StateStack& stack, Context context): context(context), stack(stack)
+    State(StateStack& stack, Context& context): context(context), stack(stack)
     {
     }
 
     virtual ~State(){}
+
+    State(const State& other) = delete;
 
     virtual void draw(){}
     virtual bool update(sf::Time dt) = 0;
@@ -26,9 +28,8 @@ protected:
     void requestStackPop(){}
     void requestStackClear();
 
-private:
     StateStack& stack;
-    Context context;
+    Context& context;
 };
 
 

@@ -25,6 +25,8 @@ struct ResourceHolder {
         std::cout << "construyendo the resorce holder" << std::endl;
     }
 
+    ResourceHolder(const ResourceHolder& other) = delete;
+
     ~ResourceHolder(){
         std::cout << "destroying the resorce holder" << std::endl;
     }

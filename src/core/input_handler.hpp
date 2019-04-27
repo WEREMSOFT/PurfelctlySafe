@@ -23,7 +23,6 @@ struct InputHandler {
     std::map<Action, Command>				actionBinding;
 
     InputHandler(){
-
         // Set initial key bindings
         keyBinding[sf::Keyboard::Left] = MOVE_LEFT;
         keyBinding[sf::Keyboard::Right] = MOVE_RIGHT;
@@ -32,10 +31,9 @@ struct InputHandler {
         keyBinding[sf::Keyboard::Space] = PRINT_POSITION;
 
         initializeActions();
-
-
-
     }
+
+    InputHandler(const InputHandler& other) = delete;
 
     void initializeActions()
     {
@@ -61,7 +59,7 @@ struct InputHandler {
         actionBinding[MOVE_DOWN] = std::move(cmd);
 
         cmd.action = [](GameObject& go, sf::Time dt) {
-            std::cout << go.getPosition().x << " - " << go.getPosition().y << std::endl;
+            //std::cout << go.getPosition().x << " - " << go.getPosition().y << std::endl;
         };
 
         cmd.category = Category::TABLE;
@@ -81,7 +79,7 @@ struct InputHandler {
 
     void processEvent(sf::Event event){
         if (event.type == sf::Event::KeyPressed){
-            std::cout << "Key pressed " << event.key.code << std::endl;
+//            std::cout << "Key pressed " << event.key.code << std::endl;
         }
 
     }

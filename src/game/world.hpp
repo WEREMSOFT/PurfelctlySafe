@@ -21,6 +21,8 @@ struct World: sf::NonCopyable {
         std::cout << "destroying world" << std::endl;
     }
 
+    World(const World& other) = delete;
+
     void buildScene(){
         for(std::size_t i = 0; i < LAYER_COUNT; ++i){
             GameObject::Ptr layer(new GameObject());
@@ -75,5 +77,5 @@ private:
     };
     std::array<GameObject*, LAYER_COUNT> sceneLayers;
     CommandQueue commandQueue;
-    Context context;
+    Context& context;
 };

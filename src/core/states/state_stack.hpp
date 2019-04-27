@@ -26,6 +26,8 @@ struct StateStack : private sf::NonCopyable {
 
     }
 
+    StateStack(const StateStack& other) = delete;
+
     template<typename T>
     void registerState(int stateID) {
         factories[stateID] = [this] () {
@@ -35,8 +37,9 @@ struct StateStack : private sf::NonCopyable {
 
     void update(sf::Time dt) {
         for(auto itr = stack.rbegin(); itr != stack.rend(); ++itr){
-            if(!(*itr)->update(dt)) return;
+            if(!(*itr)->update(dt)) break;
         }
+        applyPendingChanges();
     }
 
     void draw() {
@@ -49,8 +52,6 @@ struct StateStack : private sf::NonCopyable {
         for(auto itr = stack.rbegin(); itr != stack.rend(); ++itr){
             if(!(*itr)->handleEvent(event)) return;
         }
-
-        applyPendingChanges();
     }
 
     void pushState(int stateID) {
