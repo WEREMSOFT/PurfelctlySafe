@@ -15,9 +15,10 @@ namespace Textures{
 
 namespace Fonts{
     enum ID {
-        ARIAL
+        PRESS_START,
+        FONT_COUNT
     };
 }
 
 typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
-typedef ResourceHolder<sf::Font, Textures::ID> FontHolder;
+typedef ResourceHolder<sf::Font, Fonts::ID> FontHolder;
