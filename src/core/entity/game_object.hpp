@@ -43,9 +43,8 @@ struct GameObject: public sf::Transformable, public sf::Drawable, private sf::No
         }
     }
 
-
 private:
-    void updateCurrent(sf::Time dt){
+    virtual void updateCurrent(sf::Time dt){
     }
 
     void updateChildren(sf::Time dt){

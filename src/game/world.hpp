@@ -6,6 +6,8 @@
 #include "category.hpp"
 #include "../core/input_handler.hpp"
 #include "../core/context.hpp"
+#include "../core/entity/animated_game_object.hpp"
+#include "characters/cat.hpp"
 
 struct World: sf::NonCopyable {
 
@@ -34,17 +36,20 @@ struct World: sf::NonCopyable {
         background.get()->category = Category::BACKGROUND;
         GameObject::Ptr house(new SpriteGameObject(context.textureHolder->get(Textures::HOUSE)));
         GameObject::Ptr table(new SpriteGameObject(context.textureHolder->get(Textures::TABLE)));
+        GameObject::Ptr cat(new Cat(context));
         table.get()->category = Category::TABLE;
         table.get()->setPosition(519.f, 436.f);
 
         GameObject::Ptr lightOfTable(new SpriteGameObject(context.textureHolder->get(Textures::LIGHT_O_TABLE)));
 
         table.get()->addChild(std::move(lightOfTable));
+        table.get()->addChild(std::move(cat));
 
 
         sceneLayers[BACKGROUND]->addChild(std::move(background));
         sceneLayers[MIDDLE]->addChild(std::move(house));
         sceneLayers[FOREGROUND]->addChild(std::move(table));
+//        sceneLayers[FOREGROUND]->addChild(std::move(cat));
     }
 
     void update(sf::Time dt) {

@@ -9,6 +9,7 @@
 
 #include "../../core/states/state.hpp"
 #include "../resource_definitions.hpp"
+#include "../../core/utils.hpp"
 
 struct LoadingState : public State {
 
@@ -45,6 +46,9 @@ struct LoadingState : public State {
         threads.emplace_back(loadTexture, Textures::TABLE, "./assets/images/table.png");
         threads.emplace_back(loadTexture, Textures::HOUSE, "./assets/images/house.png");
         threads.emplace_back(loadTexture, Textures::TITLE_BACKGROUND_TILE, "../assets/images/pattern_background.png");
+        threads.emplace_back(loadTexture, Textures::TITLE_MAIN_IMAGE, "../assets/images/title.png");
+        threads.emplace_back(loadTexture, Textures::CAT_1_ANIMATION, "../assets/images/characters/cat1.png");
+
 
         std::cout << "...assets loaded" << std::endl;
     }
@@ -57,7 +61,7 @@ struct LoadingState : public State {
         loadingText.setString("Loading Resources");
         centerOrigin(loadingText);
 
-        loadingText.setPosition(context.window->getSize().x / 2u, context.window->getSize().y / 2u);
+        centerOnScreen(loadingText, *context.window);
 
         progressBarBackgroud.setFillColor(sf::Color::White);
         progressBarBackgroud.setSize(sf::Vector2f(context.window->getSize().x - 20, 40.f));
@@ -105,11 +109,6 @@ struct LoadingState : public State {
 
     ~LoadingState() {
         std::cout << "Destroying loading state" << std::endl;
-    }
-
-    void centerOrigin(sf::Text &sprite) {
-        sf::FloatRect bounds{sprite.getLocalBounds()};
-        sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
     }
 };
 

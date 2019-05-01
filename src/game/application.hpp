@@ -22,12 +22,13 @@ struct Application {
     StateStack stateStack;
 
     Application() :
-            window(sf::VideoMode(1230, 768), "SFML Apllication"),
+            window(sf::VideoMode(1230, 768), "SFML Apllication", sf::Style::Default),
             textureHolder(),
             fontHolder(),
             inputHandler(),
             context(window, textureHolder, fontHolder, inputHandler),
             stateStack(context) {
+
         std::cout << "creating application..." << std::endl;
 
         stateStack.registerState<LoadingState>(States::LOADING);
