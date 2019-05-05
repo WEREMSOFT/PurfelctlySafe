@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+class InputHandler;
 #include "./resources/resource_holder.hpp"
 #include "input_handler.hpp"
 

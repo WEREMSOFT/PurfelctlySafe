@@ -11,7 +11,6 @@
 
 struct World: sf::NonCopyable {
 
-
     explicit World(Context& context):
     window(*context.window),
     view(window.getDefaultView()),
@@ -36,20 +35,21 @@ struct World: sf::NonCopyable {
         background.get()->category = Category::BACKGROUND;
         GameObject::Ptr house(new SpriteGameObject(context.textureHolder->get(Textures::HOUSE)));
         GameObject::Ptr table(new SpriteGameObject(context.textureHolder->get(Textures::TABLE)));
-        GameObject::Ptr cat(new Cat(context));
         table.get()->category = Category::TABLE;
         table.get()->setPosition(519.f, 436.f);
+
+        GameObject::Ptr cat(new Cat(context));
+        cat.get()->setPosition(349, 260);
+
 
         GameObject::Ptr lightOfTable(new SpriteGameObject(context.textureHolder->get(Textures::LIGHT_O_TABLE)));
 
         table.get()->addChild(std::move(lightOfTable));
-        table.get()->addChild(std::move(cat));
-
 
         sceneLayers[BACKGROUND]->addChild(std::move(background));
         sceneLayers[MIDDLE]->addChild(std::move(house));
         sceneLayers[FOREGROUND]->addChild(std::move(table));
-//        sceneLayers[FOREGROUND]->addChild(std::move(cat));
+        sceneLayers[FOREGROUND]->addChild(std::move(cat));
     }
 
     void update(sf::Time dt) {
@@ -64,6 +64,9 @@ struct World: sf::NonCopyable {
     void draw() {
         window.setView(view);
         window.draw(scene);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+            window.draw(sf::Sprite(context.textureHolder->get(Textures::CAT_1_ANIMATION)));
+        }
     }
 
     CommandQueue& getCommandQueue() {

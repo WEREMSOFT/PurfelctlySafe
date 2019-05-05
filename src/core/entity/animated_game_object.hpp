@@ -35,7 +35,7 @@ struct AnimatedGameObject: public GameObject {
     }
 
 protected:
-    void updateCurrent(const sf::Time dt) override {
+    virtual void updateCurrent(const sf::Time dt) override {
         sprite = &animations[currentAnimation].sprite;
         processAnimationFrame(dt);
     }

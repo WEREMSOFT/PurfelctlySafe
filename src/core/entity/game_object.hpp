@@ -34,7 +34,7 @@ struct GameObject: public sf::Transformable, public sf::Drawable, private sf::No
         return result;
     }
 
-    void onCommand(const Command& command, sf::Time dt){
+    virtual void onCommand(const Command& command, sf::Time dt){
         if(category & command.category)
             command.action(*this, dt);
 
@@ -43,7 +43,7 @@ struct GameObject: public sf::Transformable, public sf::Drawable, private sf::No
         }
     }
 
-private:
+protected:
     virtual void updateCurrent(sf::Time dt){
     }
 

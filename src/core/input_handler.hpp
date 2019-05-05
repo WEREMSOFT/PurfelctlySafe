@@ -5,6 +5,8 @@
 #pragma once
 #include <map>
 #include "command/command_queue.hpp"
+#include "entity/animated_game_object.hpp"
+#include "../game/characters/cat.hpp"
 #include <functional>
 
 struct InputHandler {
@@ -41,6 +43,15 @@ struct InputHandler {
         Command cmd;
 
         auto myCommandAction = [playerSpeed] (sf::Vector2f direction, GameObject& go, sf::Time dt) {
+            Cat& cat = ((Cat&) go);
+            if(direction.x > 0){
+                cat.flipped = true;
+            } else if(direction.x < 0) {
+                cat.flipped = false;
+            }
+
+            cat.playAnimation(CatAnimations::ANIM_RUNNING);
+
             go.move(direction * playerSpeed * dt.asSeconds());
         };
 
@@ -59,11 +70,11 @@ struct InputHandler {
         actionBinding[MOVE_DOWN] = std::move(cmd);
 
         cmd.action = [](GameObject& go, sf::Time dt) {
-            //std::cout << go.getPosition().x << " - " << go.getPosition().y << std::endl;
+            std::cout << go.getPosition().x << " - " << go.getPosition().y << std::endl;
         };
 
-        cmd.category = Category::TABLE;
-        actionBinding[PRINT_POSITION] = std::move(cmd);
+//        cmd.category = Category::CAT_1;
+//        actionBinding[PRINT_POSITION] = std::move(cmd);
     }
 
     void handleRealtimeInput(CommandQueue& commands)
@@ -75,6 +86,7 @@ struct InputHandler {
             if (sf::Keyboard::isKeyPressed(pair.first))
                 commands.push(actionBinding[pair.second]);
         }
+
     }
 
     void processEvent(sf::Event event){

@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <math.h>
 
 enum AnimationState {
     PLAYING,
@@ -10,9 +11,9 @@ enum AnimationState {
 
 struct Animation {
     AnimationState state = AnimationState::STOPED;
-    int maxFrames;
-    float frame;
-    int framesPerSeccond = 30;
+    int maxFrames = 0;
+    float frame = 0.f;
+    float framesPerSeccond = 30.f;
     sf::Sprite sprite;
     sf::Rect<int> frameSize;
     bool looped = true;
@@ -63,7 +64,8 @@ struct Animation {
     void processAnimationFrame(const sf::Time delta) {
         // only process animation if the animation is not stoped.
         if (state == AnimationState::PLAYING) {
-            frame += framesPerSeccond * delta.asSeconds();
+            frame += framesPerSeccond * delta.asSeconds();;
+
             if (frame > maxFrames) {
                 frame = 0;
                 if(!looped) {
@@ -88,6 +90,15 @@ struct Animation {
         frame = (frame > maxFrames) ? maxFrames : frame;
         this->frame = frame;
         gotoFrame(frame);
+    }
+
+    void setCentered(bool pCentered){
+        centered = pCentered;
+        if(centered) {
+            sprite.setOrigin(frameSize.width / 2, 0.0);
+        } else {
+            sprite.setOrigin(0.0, 0.0);
+        }
     }
 };
 
