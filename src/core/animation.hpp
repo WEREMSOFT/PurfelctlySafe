@@ -17,16 +17,25 @@ struct Animation {
     sf::Rect<int> frameSize;
     bool looped = true;
     bool centered = false;
-    sf::Texture* texture;
 
-    Animation(){}
+    Animation(){
+        std::cout << "building animation " << std::endl;
+        if(centered) {
+            sprite.setOrigin(frameSize.width / 2, 0.0);
+        } else {
+            sprite.setOrigin(0.0, 0.0);
+        }
+    }
+
+    ~Animation(){
+        std::cout << "destroying animation " << std::endl;
+    }
 
     Animation(sf::Texture& pTexture, int pMaxFrames, sf::Rect<int> pFrameSize, bool pLooped = true, bool pCentered = true) {
-        texture = &pTexture;
         centered = pCentered;
         frameSize = pFrameSize;
         maxFrames = pMaxFrames;
-        sprite.setTexture(pTexture); 
+        setTexture(pTexture);
         sprite.setTextureRect(frameSize);
         if(centered) {
             sprite.setOrigin(frameSize.width / 2, 0.0);
@@ -45,6 +54,10 @@ struct Animation {
 
     void stopAnimation() {
         state = AnimationState::STOPED;
+    }
+
+    void setTexture(sf::Texture& pTexture){
+        sprite.setTexture(pTexture);
     }
 
     void processAnimationFrame(const sf::Time delta) {

@@ -44,7 +44,7 @@ struct InputHandler {
             go.move(direction * playerSpeed * dt.asSeconds());
         };
 
-        cmd.category = Category::TABLE;
+        cmd.category = Category::CAT_1;
 
         cmd.action = std::bind(myCommandAction, sf::Vector2f(-1.f, 0), std::placeholders::_1, std::placeholders::_2);
         actionBinding[MOVE_LEFT] = std::move(cmd);

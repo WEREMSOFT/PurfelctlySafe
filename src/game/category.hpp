@@ -8,7 +8,8 @@ namespace Category {
         NONE = 0,
         SCENE = 1,
         BACKGROUND = 1 << 2,
-        TABLE = 1 << 3
+        TABLE = 1 << 3,
+        CAT_1 = 1 << 4
     };
 };
 

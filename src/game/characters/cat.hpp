@@ -12,22 +12,21 @@
 #include <functional>
 
 enum CatAnimations {
-    ANIM_WALKING,
     ANIM_IDLE,
-    ANIM_RUNNING,
-    ANIM_ATTACK,
     ANIM_AMMOUNT
 };
 
 struct Cat: public AnimatedGameObject<ANIM_AMMOUNT>  {
     explicit Cat(Context& context){
-        animations[CatAnimations::ANIM_IDLE].texture = &context.textureHolder->get(Textures::CAT_1_ANIMATION);
+        category = Category::CAT_1;
+        animations[CatAnimations::ANIM_IDLE].setTexture(context.textureHolder->get(Textures::CAT_1_ANIMATION));
         animations[CatAnimations::ANIM_IDLE].maxFrames = 5;
         animations[CatAnimations::ANIM_IDLE].frameSize =  {0, 26, 135, 154};
         animations[CatAnimations::ANIM_IDLE].framesPerSeccond = 10;
         playAnimation(CatAnimations::ANIM_IDLE);
     }
 
+private:
 
 };
 
