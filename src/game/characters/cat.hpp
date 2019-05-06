@@ -14,6 +14,7 @@
 enum CatAnimations {
     ANIM_IDLE,
     ANIM_RUNNING,
+    ANIM_ATTACKING,
     ANIM_AMMOUNT
 };
 
@@ -34,6 +35,14 @@ struct Cat: public AnimatedGameObject<ANIM_AMMOUNT>  {
         animations[CatAnimations::ANIM_RUNNING].framesPerSeccond = 8;
         animations[CatAnimations::ANIM_RUNNING].setCentered(true);
 
+        animations[CatAnimations::ANIM_ATTACKING].setTexture(context.textureHolder->get(Textures::CAT_1_ANIMATION));
+        animations[CatAnimations::ANIM_ATTACKING].maxFrames = 5;
+        animations[CatAnimations::ANIM_ATTACKING].frameSize =  {0, 330, 148, 144};
+        animations[CatAnimations::ANIM_ATTACKING].framesPerSeccond = 15;
+        animations[CatAnimations::ANIM_ATTACKING].looped = false;
+        animations[CatAnimations::ANIM_ATTACKING].setCentered(true);
+
+
         playAnimation(CatAnimations::ANIM_IDLE);
     }
 
@@ -41,8 +50,12 @@ protected:
     virtual void updateCurrent(sf::Time dt) override {
         AnimatedGameObject::updateCurrent(dt);
         if(lastPosition.x == getPosition().x && lastPosition.y == getPosition().y){
-            playAnimation(CatAnimations::ANIM_IDLE);
+            if(currentAnimation != CatAnimations::ANIM_ATTACKING ||
+            animations[currentAnimation].state == AnimationState::STOPED){
+                playAnimation(CatAnimations::ANIM_IDLE);
+            }
         }
+
 
         lastPosition.x = getPosition().x;
         lastPosition.y = getPosition().y;

@@ -5,7 +5,7 @@
 #pragma once
 class InputHandler;
 #include "./resources/resource_holder.hpp"
-#include "input_handler.hpp"
+#include "../game/input_handler.hpp"
 
 struct Context {
     Context(sf::RenderWindow &pWindow,

@@ -4,7 +4,7 @@
 #include "../core/entity/game_object.hpp"
 #include "../core/entity/sprite_game_object.hpp"
 #include "category.hpp"
-#include "../core/input_handler.hpp"
+#include "input_handler.hpp"
 #include "../core/context.hpp"
 #include "../core/entity/animated_game_object.hpp"
 #include "characters/cat.hpp"
