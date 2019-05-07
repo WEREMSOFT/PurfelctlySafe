@@ -23,12 +23,10 @@ namespace commands{
     void attackCat(sf::Vector2f direction, GameObject& go, sf::Time dt) {
         flipIfNecessary(direction, go);
         ((Cat&) go).playAnimation(CatAnimations::ANIM_ATTACKING);
+        ((Cat&) go).stateStack.push_back(processStateAttack);
     };
 
     void printPosition(GameObject& go, sf::Time dt) {
         std::cout << go.getPosition().x << " - " << go.getPosition().y << std::endl;
     }
-
-
 }
-

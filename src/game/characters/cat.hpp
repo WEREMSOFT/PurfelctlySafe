@@ -8,6 +8,7 @@
 #include "../../core/entity/animated_game_object.hpp"
 #include "../../core/context.hpp"
 #include "../resource_definitions.hpp"
+#include "cat_states.hpp"
 #include <memory>
 #include <functional>
 
@@ -18,8 +19,12 @@ enum CatAnimations {
     ANIM_AMMOUNT
 };
 
+struct Cat;
+void processStateIdle(Cat &cat, sf::Time sf);
+
 struct Cat: public AnimatedGameObject<ANIM_AMMOUNT>  {
     sf::Vector2f lastPosition;
+    std::vector<std::function<void(Cat&, sf::Time)>> stateStack;
 
     explicit Cat(Context& context){
         category = Category::CAT_1;
@@ -42,25 +47,42 @@ struct Cat: public AnimatedGameObject<ANIM_AMMOUNT>  {
         animations[CatAnimations::ANIM_ATTACKING].looped = false;
         animations[CatAnimations::ANIM_ATTACKING].setCentered(true);
 
+        stateStack.push_back(processStateIdle);
 
         playAnimation(CatAnimations::ANIM_IDLE);
     }
 
 protected:
     virtual void updateCurrent(sf::Time dt) override {
-        AnimatedGameObject::updateCurrent(dt);
-        if(lastPosition.x == getPosition().x && lastPosition.y == getPosition().y){
-            if(currentAnimation != CatAnimations::ANIM_ATTACKING ||
-            animations[currentAnimation].state == AnimationState::STOPED){
-                playAnimation(CatAnimations::ANIM_IDLE);
-            }
-        }
 
+        if(!stateStack.empty()){
+            stateStack.back()(*this, dt);
+        }
 
         lastPosition.x = getPosition().x;
         lastPosition.y = getPosition().y;
+
+        AnimatedGameObject::updateCurrent(dt);
     }
 
 };
 
+void processStateRun(Cat &cat, sf::Time dt) {
+    if (cat.lastPosition.x == cat.getPosition().x && cat.lastPosition.y == cat.getPosition().y) {
+        cat.playAnimation(ANIM_IDLE);
+        cat.stateStack.pop_back();
+    }
+}
 
+void processStateAttack(Cat &cat, sf::Time sf){
+    if(cat.animations[cat.currentAnimation].state == AnimationState::STOPED){
+        cat.stateStack.pop_back();
+    }
+}
+
+void processStateIdle(Cat &cat, sf::Time sf) {
+    cat.playAnimation(CatAnimations::ANIM_IDLE);
+    if (cat.lastPosition.x != cat.getPosition().x || cat.lastPosition.y != cat.getPosition().y){
+        cat.stateStack.push_back(processStateRun);
+    }
+}

@@ -9,11 +9,6 @@ struct GameObject: public sf::Transformable, public sf::Drawable, private sf::No
     typedef std::unique_ptr<GameObject> Ptr;
     int category = 0;
 
-    void addChild(Ptr pChild) {
-        pChild->parent = this;
-        children.push_back(std::move(pChild));
-    }
-
     GameObject* parent;
     std::vector<Ptr> children;
 
@@ -32,6 +27,11 @@ struct GameObject: public sf::Transformable, public sf::Drawable, private sf::No
         result->parent = nullptr;
         children.erase(found);
         return result;
+    }
+
+    void addChild(Ptr pChild) {
+        pChild->parent = this;
+        children.push_back(std::move(pChild));
     }
 
     virtual void onCommand(const Command& command, sf::Time dt){

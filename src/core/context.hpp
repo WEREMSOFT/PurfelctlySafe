@@ -3,9 +3,10 @@
 //
 
 #pragma once
-class InputHandler;
 #include "./resources/resource_holder.hpp"
 #include "../game/input_handler.hpp"
+
+class InputHandler;
 
 struct Context {
     Context(sf::RenderWindow &pWindow,
