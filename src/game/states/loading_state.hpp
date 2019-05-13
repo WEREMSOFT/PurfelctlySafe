@@ -48,6 +48,7 @@ struct LoadingState : public State {
         threads.emplace_back(loadTexture, Textures::TITLE_BACKGROUND_TILE, "../assets/images/pattern_background.png");
         threads.emplace_back(loadTexture, Textures::TITLE_MAIN_IMAGE, "../assets/images/title.png");
         threads.emplace_back(loadTexture, Textures::CAT_1_ANIMATION, "../assets/images/characters/cat1.png");
+        threads.emplace_back(loadTexture, Textures::CAT_2_ANIMATION, "../assets/images/characters/cat2.png");
 
 
         std::cout << "...assets loaded" << std::endl;

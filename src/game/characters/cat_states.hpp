@@ -7,8 +7,10 @@
 #include <SFML/Graphics.hpp>
 #include "cat.hpp"
 
-namespace CatStates {
-
-}
-
+enum CatStates {
+    STATE_IDLE,
+    STATE_RUNNING,
+    STATE_ATTACKING,
+    STATE_COUNT
+};
 

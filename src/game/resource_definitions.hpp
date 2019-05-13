@@ -11,6 +11,7 @@ namespace Textures{
         TITLE_BACKGROUND_TILE,
         TITLE_MAIN_IMAGE,
         CAT_1_ANIMATION,
+        CAT_2_ANIMATION,
         TEXTURE_COUNT
     };
 }

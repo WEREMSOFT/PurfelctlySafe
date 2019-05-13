@@ -15,15 +15,17 @@ namespace commands{
     }
 
     void moveCat(sf::Vector2f direction, GameObject& go, sf::Time dt) {
+        Cat &cat = (Cat&)go;
+        if(cat.state == CatStates::STATE_ATTACKING) return;
         flipIfNecessary(direction, go);
-        ((Cat&) go).playAnimation(CatAnimations::ANIM_RUNNING);
+        cat.passToStateRunning();
         go.move(direction * PLAYER_SPEED * dt.asSeconds());
     };
 
     void attackCat(sf::Vector2f direction, GameObject& go, sf::Time dt) {
+        Cat &cat = (Cat&)go;
         flipIfNecessary(direction, go);
-        ((Cat&) go).playAnimation(CatAnimations::ANIM_ATTACKING);
-        ((Cat&) go).stateStack.push_back(processStateAttack);
+        cat.passToStateAttacking();
     };
 
     void printPosition(GameObject& go, sf::Time dt) {

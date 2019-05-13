@@ -9,7 +9,8 @@ namespace Category {
         SCENE = 1,
         BACKGROUND = 1 << 2,
         TABLE = 1 << 3,
-        CAT_1 = 1 << 4
+        CAT_1 = 1 << 4,
+        CAT_2 = 1 << 5
     };
 };
 
