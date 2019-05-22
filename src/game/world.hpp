@@ -67,7 +67,7 @@ struct World: sf::NonCopyable {
     }
 
     void draw() {
-        window.setView(view);
+//        window.setView(view);
         window.draw(scene);
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
             window.draw(sf::Sprite(context.textureHolder->get(Textures::CAT_1_ANIMATION)));

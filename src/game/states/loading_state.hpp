@@ -65,7 +65,7 @@ struct LoadingState : public State {
         centerOnScreen(loadingText, *context.window);
 
         progressBarBackgroud.setFillColor(sf::Color::White);
-        progressBarBackgroud.setSize(sf::Vector2f(context.window->getSize().x - 20, 40.f));
+        progressBarBackgroud.setSize(sf::Vector2f(context.window->getView().getSize().x - 20, 40.f));
         progressBarBackgroud.setPosition(15, loadingText.getPosition().y + 40);
 
         progressBar.setFillColor(sf::Color::Red);
@@ -83,8 +83,8 @@ struct LoadingState : public State {
 
     bool update(sf::Time dt) override {
         percentajeLoaded = (float) resourceConunter / (float) Textures::TEXTURE_COUNT;
-        auto substraction = context.window->getSize().x * percentajeLoaded + 30;
-        progressBar.setSize(sf::Vector2f( context.window->getSize().x - substraction, 30));
+        auto substraction = context.window->getView().getSize().x * percentajeLoaded + 30;
+        progressBar.setSize(sf::Vector2f( context.window->getView().getSize().x - substraction, 30));
 
         if (resourceConunter != 0) {
             percentajeLoaded = (float) resourceConunter / (float) Textures::TEXTURE_COUNT * 100.0f;

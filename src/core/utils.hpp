@@ -10,6 +10,6 @@ void centerOrigin(sf::Text &sprite) {
     sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 }
 
-void centerOnScreen(sf::Text &text, sf::Window& window){
-    text.setPosition(window.getSize().x / 2u, window.getSize().y / 2u);
+void centerOnScreen(sf::Text &text, sf::RenderWindow& window){
+    text.setPosition(window.getView().getSize().x / 2u, window.getView().getSize().y / 2u);
 }

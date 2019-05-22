@@ -12,6 +12,9 @@
 #include "states/game_state.hpp"
 #include "states/loading_state.hpp"
 
+#define SCREEN_WIDTH 1230
+#define SCREEN_HEIGHT 768
+
 struct Application {
     sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
     sf::RenderWindow window;
@@ -20,9 +23,12 @@ struct Application {
     InputHandler inputHandler;
     Context context;
     StateStack stateStack;
+    // Scaling objects
+    sf::RenderTexture renderTexture;
+    sf::View view;
 
     Application() :
-            window(sf::VideoMode(1230, 768), "SFML Apllication", sf::Style::Default),
+            window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "SFML Apllication", sf::Style::Fullscreen),
             textureHolder(),
             fontHolder(),
             inputHandler(),
@@ -30,6 +36,13 @@ struct Application {
             stateStack(context) {
 
         std::cout << "creating application..." << std::endl;
+
+        renderTexture.create(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        // This scales the fullscreen to match the screen resolution of the target.
+        view.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        view.setCenter(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+        window.setView(view);
 
         stateStack.registerState<LoadingState>(States::LOADING);
         stateStack.registerState<GameState>(States::GAME);
@@ -66,7 +79,7 @@ struct Application {
     void render() {
         window.clear();
         stateStack.draw();
-        window.setView(window.getDefaultView());
+//        window.setView(window.getDefaultView());
         window.display();
     }
 
