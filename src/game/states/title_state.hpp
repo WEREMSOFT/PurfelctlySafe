@@ -19,7 +19,7 @@ struct TitleState : public State {
             State(stateStack, context){
         context.textureHolder->get(Textures::TITLE_BACKGROUND_TILE).setRepeated(true);
         backgroundSprite.setTexture(context.textureHolder->get(Textures::TITLE_BACKGROUND_TILE));
-        backgroundSprite.setTextureRect(sf::IntRect(0, 0, context.window->getSize().x, context.window->getSize().y));
+        backgroundSprite.setTextureRect(sf::IntRect(0, 0, context.window->getView().getSize().x, context.window->getView().getSize().y));
 
         mainImage.setTexture(context.textureHolder->get(Textures::TITLE_MAIN_IMAGE));
         pressAnyKeyText.setFont(context.fontHolder->get(Fonts::PRESS_START));

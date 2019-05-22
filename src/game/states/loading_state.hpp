@@ -10,6 +10,7 @@
 #include "../../core/states/state.hpp"
 #include "../resource_definitions.hpp"
 #include "../../core/utils.hpp"
+#include <mutex>
 
 struct LoadingState : public State {
 

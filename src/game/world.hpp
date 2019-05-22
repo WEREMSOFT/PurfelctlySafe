@@ -42,8 +42,8 @@ struct World: sf::NonCopyable {
         GameObject::Ptr cat(new Cat(context));
         cat.get()->setPosition(349, 260);
 
-        GameObject::Ptr cat2(new Cat2(context));
-        cat2.get()->setPosition(349, 300);
+//        GameObject::Ptr cat2(new Cat2(context));
+//        cat2.get()->setPosition(349, 300);
 
 
         GameObject::Ptr lightOfTable(new SpriteGameObject(context.textureHolder->get(Textures::LIGHT_O_TABLE)));
@@ -54,7 +54,7 @@ struct World: sf::NonCopyable {
         sceneLayers[MIDDLE]->addChild(std::move(house));
         sceneLayers[FOREGROUND]->addChild(std::move(table));
         sceneLayers[FOREGROUND]->addChild(std::move(cat));
-        sceneLayers[FOREGROUND]->addChild(std::move(cat2));
+//        sceneLayers[FOREGROUND]->addChild(std::move(cat2));
     }
 
     void update(sf::Time dt) {

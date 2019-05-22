@@ -4,8 +4,8 @@
 
 #pragma once
 
-#import "cat.hpp"
-#import "../category.hpp"
+#include "cat.hpp"
+#include "../category.hpp"
 
 struct Cat2: public Cat {
 

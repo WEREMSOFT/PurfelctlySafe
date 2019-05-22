@@ -1,9 +1,15 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.7.2)
 project(PurfectlySafe)
 
-set(CMAKE_CXX_STANDARD 17)
-set(OPTIMIZATION_FLAGS "-O0")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OPTIMIZATION_FLAGS} -Wc++17-extensions -framework GLUT -framework sfml-audio  -framework sfml-graphics -framework sfml-window -framework sfml-system")
+set(OPTIMIZATION_FLAGS "-O3")
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(CMAKE_CXX_STANDARD 14)
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OPTIMIZATION_FLAGS} -Wc++17-extensions -framework GLUT -framework sfml-audio  -framework sfml-graphics -framework sfml-window -framework sfml-system")
+else()
+    set(CMAKE_CXX_STANDARD 11)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OPTIMIZATION_FLAGS} -std=c++11 -I/home/pi/documents/sfml-pi/include -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lpthread")
+endif()
 file(COPY assets DESTINATION ./)
 
 
