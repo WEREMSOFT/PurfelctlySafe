@@ -28,7 +28,7 @@ struct Application {
     sf::View view;
 
     Application() :
-            window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "SFML Apllication", sf::Style::Fullscreen),
+            window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "SFML Apllication", sf::Style::Default),
             textureHolder(),
             fontHolder(),
             inputHandler(),
@@ -40,7 +40,8 @@ struct Application {
         renderTexture.create(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // This scales the fullscreen to match the screen resolution of the target.
-        view.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+//        view.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        view.setSize(window.getSize().x, window.getSize().y);
         view.setCenter(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
         window.setView(view);
 
